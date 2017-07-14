@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec java -jar target/boil.jar "$@"
+exec java -client -jar target/boil.jar "$@"
