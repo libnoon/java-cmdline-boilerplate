@@ -65,5 +65,7 @@ public final class Main {
         }
         
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
+
+        System.getProperties().list(System.out);
     }
 }
