@@ -4,18 +4,32 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import java.util.Arrays;
 import joptsimple.OptionSpec;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public final class Main {
-    private static void usage() {
-        System.out.println("run [OPTION...] TEXT...");
-        System.out.println("Run on the given arguments.");
-        System.out.println(" Options:");
-        System.out.println("   -n, --name=NAME       Use this NAME");
-        System.out.println("   -i, --integer=NUMBER  Use this NUMBER");
-        System.out.println("   -h, --help            Show this help");
+    private void usage() {
+        try {
+            try (InputStream is = getClass().getResourceAsStream("/help.txt")) {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        }
+        catch (IOException ioException) {
+            System.err.println("cannot retrieve help");
+        }
     }
 
     public static void main(String[] args) {
+        new Main().run(args);
+    }
+
+    private void run(String[] args) {
         OptionParser parser = new OptionParser("hn:i:");
         parser.acceptsAll(Arrays.asList("help", "h"));
         OptionSpec<String> name = parser.acceptsAll(Arrays.asList("name", "n")).withRequiredArg().defaultsTo("Isaac Newton");

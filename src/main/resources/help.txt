@@ -1,0 +1,6 @@
+run [OPTION...] TEXT...
+Run on the given arguments.
+ Options:
+   -n, --name=NAME       Use this NAME
+   -i, --integer=NUMBER  Use this NUMBER
+   -h, --help            Show this help
