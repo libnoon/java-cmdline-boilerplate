@@ -48,12 +48,6 @@ public final class Main {
             return;
         }
 
-        System.out.println("The name is " + optionSet.valueOf(name));
-
-        if (optionSet.has(integer)) {
-            System.out.println("The number is " + optionSet.valueOf(integer));
-        }
-        
         List<String> params = optionSet.valuesOf(nonOptions);
         if (params.size() < 1) {
             System.err.println("not enough parameters");
@@ -64,6 +58,12 @@ public final class Main {
             System.exit(1);
         }
 
+        System.out.println("The name is " + optionSet.valueOf(name));
+
+        if (optionSet.has(integer)) {
+            System.out.println("The number is " + optionSet.valueOf(integer));
+        }
+        
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
     }
 }
