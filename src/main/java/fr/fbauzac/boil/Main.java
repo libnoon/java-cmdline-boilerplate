@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import joptsimple.NonOptionArgumentSpec;
 
 public final class Main {
     private void usage() {
@@ -34,7 +35,7 @@ public final class Main {
         parser.acceptsAll(Arrays.asList("help", "h"));
         OptionSpec<String> name = parser.acceptsAll(Arrays.asList("name", "n")).withRequiredArg().defaultsTo("Isaac Newton");
         OptionSpec<Integer> integer = parser.acceptsAll(Arrays.asList("integer", "i")).withRequiredArg().ofType(Integer.class);
-        
+        NonOptionArgumentSpec<String> nonOptions = parser.nonOptions();
 
         // Note that it also automatically works with enum classes
         // (anything that has valueOf(), in fact).
@@ -52,6 +53,6 @@ public final class Main {
             System.out.println("The number is " + optionSet.valueOf(integer));
         }
         
-        //System.out.println("The arguments were: " + ", ".join(parser.nonOptionArguments()));
+        System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
     }
 }
