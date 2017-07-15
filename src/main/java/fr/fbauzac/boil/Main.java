@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import joptsimple.NonOptionArgumentSpec;
+import java.util.List;
 
 public final class Main {
     private void usage() {
@@ -53,6 +54,16 @@ public final class Main {
             System.out.println("The number is " + optionSet.valueOf(integer));
         }
         
+        List<String> params = optionSet.valuesOf(nonOptions);
+        if (params.size() < 1) {
+            System.err.println("not enough parameters");
+            System.exit(1);
+        }
+        else if (params.size() > 2) {
+            System.err.println("too many arguments");
+            System.exit(1);
+        }
+
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
     }
 }
