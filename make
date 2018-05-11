@@ -27,7 +27,7 @@ def mkdir_if_necessary(path):
             raise
 
 def run(args):
-    print(" ".join(args))
+    print("+ " + " ".join(args))
     subprocess.check_call(args)
 
 def download(url):
@@ -70,16 +70,15 @@ def build():
 
     mkdir_if_necessary("mods")
     for module_name in MODULES:
-        mkdir_if_necessary("mods/%s" % module_name)
         run(["javac",
-             "-d", "mods",
+             "-d", "src",
              "--module-path", "lib",
              "--module-source-path", "src",
              "--module", module_name])
         run(["jar", "--create",
              "--file", "lib/%s.jar" % module_name,
              "--main-class", "com.example.cli.Main",
-             "-C", "mods/%s" % module_name,
+             "-C", "src/%s" % module_name,
              "."])
 
 def clean():
