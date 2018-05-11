@@ -1,4 +1,4 @@
-package fr.fbauzac.boil;
+package com.example.cli;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -63,7 +63,7 @@ public final class Main {
         if (optionSet.has(integer)) {
             System.out.println("The number is " + optionSet.valueOf(integer));
         }
-        
+
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
 
         System.getProperties().list(System.out);

@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec java -client -jar target/boil.jar "$@"
+exec java -client --module-path lib --module mainmod "$@"
