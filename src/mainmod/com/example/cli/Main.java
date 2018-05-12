@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import joptsimple.NonOptionArgumentSpec;
 import java.util.List;
+import java.util.TreeSet;
 
 public final class Main {
     private void usage() {
@@ -66,6 +67,12 @@ public final class Main {
 
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
 
-        System.getProperties().list(System.out);
+        {
+            var props = System.getProperties();
+            var keys = new TreeSet<String>(props.stringPropertyNames());
+            for (var key: keys) {
+                System.out.println(String.format("%s=%s", key, props.getProperty(key)));
+            }
+        }
     }
 }
