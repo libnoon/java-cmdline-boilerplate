@@ -5,7 +5,7 @@ Also see [https://github.com/libnoon/java-cmdline-boilerplate](the Homepage).
 To build:
 
 ``` shell
-$ mvn package
+$ ./make build
 ```
 
 To run:
