@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec java -client --module-path lib --module mainmod "$@"
+exec java -client --module-path lib:src --module mainmod/com.example.cli.Main "$@"
