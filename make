@@ -89,6 +89,7 @@ def clean():
                 pass
             else:
                 raise
+    run("find -name *.class -delete".split())
 
 if __name__ == "__main__":
     main()
