@@ -53,22 +53,21 @@ def main():
         else:
             sys.exit('unhandled option %s' % o)
 
-    if len(args) != 1:
-        sys.exit("invalid arguments")
-    target = args[0]
+    if len(args) < 1:
+        sys.exit("not enough parameters")
 
-    if target == "build":
-        build()
-    elif target == "clean":
-        clean()
-    else:
-        sys.exit("unknown target {%s}" % target)
+    for target in args:
+        if target == "build":
+            build()
+        elif target == "clean":
+            clean()
+        else:
+            sys.exit("unknown target {%s}" % target)
 
 def build():
     mkdir_if_necessary("lib")
     download("http://central.maven.org/maven2/net/sf/jopt-simple/jopt-simple/6.0-alpha-2/jopt-simple-6.0-alpha-2.jar")
 
-    mkdir_if_necessary("mods")
     for module_name in MODULES:
         run(["javac",
              "-d", "src",
@@ -82,14 +81,6 @@ def build():
              "."])
 
 def clean():
-    try:
-        shutil.rmtree("mods")
-    except OSError as exc:
-        if exc.errno == errno.ENOENT:
-            pass
-        else:
-            raise
-
     for module_name in MODULES:
         try:
             os.unlink("lib/%s.jar" % module_name)
