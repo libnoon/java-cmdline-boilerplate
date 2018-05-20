@@ -12,7 +12,13 @@ import joptsimple.NonOptionArgumentSpec;
 import java.util.List;
 import java.util.TreeSet;
 
+/**
+ * Command line interface.
+ */
 public final class Main {
+    /**
+     * Print the command-line help.
+     */
     private void usage() {
         try {
             try (InputStream is = getClass().getResourceAsStream("/help.txt")) {
@@ -28,23 +34,35 @@ public final class Main {
         }
     }
 
+    /**
+     * Commandline entry point.
+     *
+     * This function merely creates a new Main object and calls its
+     * run() method.
+     *
+     * @param args: the commandline arguments.
+     */
     public static void main(String[] args) {
         new Main().run(args);
     }
 
+    /**
+     * The toplevel processing of the commandline.
+     *
+     * @param args: the commandline arguments.
+     */
     private void run(String[] args) {
-        OptionParser parser = new OptionParser("hn:i:");
-        parser.acceptsAll(Arrays.asList("help", "h"));
-        OptionSpec<String> name = parser.acceptsAll(Arrays.asList("name", "n")).withRequiredArg().defaultsTo("Isaac Newton");
-        OptionSpec<Integer> integer = parser.acceptsAll(Arrays.asList("integer", "i")).withRequiredArg().ofType(Integer.class);
+        OptionParser parser = new OptionParser();
+        OptionSpec<Void> help = parser.acceptsAll(List.of("help", "h"));
+        OptionSpec<String> name = parser.acceptsAll(List.of("name", "n")).withRequiredArg();
+        OptionSpec<Integer> integer = parser.acceptsAll(List.of("integer", "i")).withRequiredArg().ofType(Integer.class).defaultsTo(10);
         NonOptionArgumentSpec<String> nonOptions = parser.nonOptions();
 
         // Note that it also automatically works with enum classes
         // (anything that has valueOf(), in fact).
-        parser.accepts("integer").withRequiredArg().ofType(Integer.class).defaultsTo(10);
         OptionSet optionSet = parser.parse(args);
 
-        if (optionSet.has("help")) {
+        if (optionSet.has(help)) {
             usage();
             return;
         }
@@ -59,20 +77,20 @@ public final class Main {
             System.exit(1);
         }
 
-        System.out.println("The name is " + optionSet.valueOf(name));
-
-        if (optionSet.has(integer)) {
-            System.out.println("The number is " + optionSet.valueOf(integer));
+        if (optionSet.has(name)) {
+            System.out.println("There is a name and its value is " + optionSet.valueOf(name));
         }
+
+        System.out.println("The number is " + optionSet.valueOf(integer));
 
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
 
         {
             var props = System.getProperties();
             var keys = new TreeSet<String>(props.stringPropertyNames());
-            for (var key: keys) {
-                System.out.println(String.format("%s=%s", key, props.getProperty(key)));
-            }
+            keys.stream().filter(s -> s.startsWith("java.")).forEach(key -> {
+                    System.out.println(String.format("%s=%s", key, props.getProperty(key)));
+                });
         }
     }
 }
