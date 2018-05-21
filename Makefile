@@ -12,7 +12,7 @@ lib/jopt-simple-6.0-alpha-2.jar: lib
 
 build:
 	javac $(JAVAC_ARGS) -d src --module-path lib --module-source-path src --module $(MODULE)
-	jar --create --file lib/$(JAR_NAME) --main-class com.example.cli.Main -C src/$(MODULE) .
+	jar --create --file lib/$(JAR_NAME) --main-class com.example.cli.Main --manifest src/$(MODULE).mf -C src/$(MODULE) .
 
 clean:
 	rm -f lib/$(JAR_NAME)
