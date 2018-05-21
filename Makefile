@@ -1,4 +1,4 @@
-default: build
+default: build doc
 
 CENTRAL = http://central.maven.org/maven2
 JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all
@@ -18,3 +18,8 @@ build:
 clean:
 	rm -f lib/$(JAR_NAME)
 	find -name *.class -delete
+
+.PHONY: doc
+doc:
+	mkdir -p doc
+	javadoc -html5 --module $(MODULE) --module-path lib --module-source-path src -d doc `find src/$(MODULE) -name \*.java`

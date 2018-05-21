@@ -40,7 +40,7 @@ public final class Main {
      * This function merely creates a new Main object and calls its
      * run() method.
      *
-     * @param args: the commandline arguments.
+     * @param args the commandline arguments.
      */
     public static void main(String[] args) {
         new Main().run(args);
@@ -49,9 +49,9 @@ public final class Main {
     /**
      * The toplevel processing of the commandline.
      *
-     * @param args: the commandline arguments.
+     * @param args the commandline arguments.
      */
-    private void run(String[] args) {
+    public void run(String[] args) {
         OptionParser parser = new OptionParser();
         OptionSpec<Void> help = parser.acceptsAll(List.of("help", "h"));
         OptionSpec<String> name = parser.acceptsAll(List.of("name", "n")).withRequiredArg();
