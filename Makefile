@@ -16,7 +16,7 @@ build:
 	jar --create --file lib/$(JAR_NAME) --main-class com.example.cli.Main --manifest src/$(MODULE).mf -C src/$(MODULE) .
 
 clean:
-	rm -f lib/$(JAR_NAME)
+	rm -rf lib/$(JAR_NAME) doc/
 	find -name *.class -delete
 
 .PHONY: doc
