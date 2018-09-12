@@ -13,3 +13,9 @@ To run:
 ``` shell
 $ ./boil --help
 ```
+
+To clean:
+
+``` shell
+$ ./make clean
+```
