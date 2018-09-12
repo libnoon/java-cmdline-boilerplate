@@ -8,7 +8,7 @@ import os
 import errno
 import shutil
 
-MODULES = ["mainmod"]
+MODULES = ["com.example.mainmod"]
 
 def usage():
     print("""build [OPTION...] TARGET
