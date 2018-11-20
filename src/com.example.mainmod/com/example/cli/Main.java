@@ -12,6 +12,15 @@ import joptsimple.NonOptionArgumentSpec;
 import java.util.List;
 import java.util.TreeSet;
 
+/*
+ * Cheat sheet for UNIX operations: see the javadoc:
+ *
+ * java.nio.file
+ * java.nio.file.Files
+ * java.nio.file.Paths
+ * ...
+ */
+
 /**
  * Command line interface.
  */
