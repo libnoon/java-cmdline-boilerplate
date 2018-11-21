@@ -26,6 +26,15 @@ def mkdir_if_necessary(path):
         else:
             raise
 
+def recursive_mkdir_if_necessary(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST:
+            pass
+        else:
+            raise
+
 def run(args):
     print("+ " + " ".join(args))
     subprocess.check_call(args)
