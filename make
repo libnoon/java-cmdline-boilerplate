@@ -73,6 +73,31 @@ def main():
         else:
             sys.exit("unknown target {%s}" % target)
 
+def close_stdin():
+    os.close(0)
+
+def find_java_files(directory):
+    """Perform ``find DIRECTORY -name \*.java``.
+
+    :returns:
+
+        a :class:`list` of filenames.
+
+    """
+    command = ["find", directory, "-name", "*.java"]
+    print("+ %s" % " ".join(command))
+    popen = subprocess.Popen(command,
+                             stdout=subprocess.PIPE,
+                             preexec_fn=close_stdin,
+                             close_fds=True)
+    output, _ = popen.communicate()
+    if popen.returncode != 0:
+        raise Exception("%s failed with status %d" % (" ".join(command), popen.returncode))
+    return output.splitlines()
+
+def javadoc_dir(module_name):
+    return "src/%s/javadoc" % module_name
+
 def build():
     mkdir_if_necessary("lib")
     download("http://central.maven.org/maven2/net/sf/jopt-simple/jopt-simple/6.0-alpha-2/jopt-simple-6.0-alpha-2.jar")
@@ -86,6 +111,14 @@ def build():
              "--module-path", "lib",
              "--module-source-path", "src",
              "--module", module_name])
+        recursive_mkdir_if_necessary(javadoc_dir(module_name))
+        run(["javadoc",
+             "-html5",
+             "--module", module_name,
+             "--module-path", "lib",
+             "--module-source-path", "src",
+             "-d", javadoc_dir(module_name)]
+            + find_java_files("src/%s" % module_name))
         run(["jar", "--create",
              "--file", "lib/%s.jar" % module_name,
              "--main-class", "com.example.cli.Main",
@@ -101,7 +134,9 @@ def clean():
                 pass
             else:
                 raise
-    run("find -name *.class -delete".split())
+        if os.path.exists(javadoc_dir(module_name)):
+            shutil.rmtree(javadoc_dir(module_name))
+    run("find -name *.class -o -name *.html -delete".split())
 
 if __name__ == "__main__":
     main()
