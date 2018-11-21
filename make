@@ -80,6 +80,9 @@ def build():
     for module_name in MODULES:
         run(["javac",
              "-d", "src",
+             "-Xlint:all",
+             "-Xlint:-requires-automatic",
+             "-Xdoclint:all",
              "--module-path", "lib",
              "--module-source-path", "src",
              "--module", module_name])
