@@ -9,9 +9,10 @@ import errno
 import shutil
 
 MODULES = ["com.example.mainmod"]
+MAIN_CLASS = "com.example.cli.Main"
 
 def usage():
-    print("""build [OPTION...] TARGET
+    print("""make [OPTION...] TARGET
 Build this project.
 Targets: build, clean
  Options:
@@ -67,9 +68,15 @@ def main():
 
     for target in args:
         if target == "build":
-            build()
+            target_build(args[1:])
         elif target == "clean":
-            clean()
+            target_clean(args[1:])
+        elif target == "jar":
+            target_jar(args[1:])
+        elif target == "run":
+            target_run(args[1:])
+        elif target == "run_without_jar":
+            target_run_without_jar(args[1:])
         else:
             sys.exit("unknown target {%s}" % target)
 
@@ -98,7 +105,7 @@ def find_java_files(directory):
 def javadoc_dir(module_name):
     return "src/%s/javadoc" % module_name
 
-def build():
+def target_build(args):
     mkdir_if_necessary("lib")
     download("http://central.maven.org/maven2/net/sf/jopt-simple/jopt-simple/6.0-alpha-2/jopt-simple-6.0-alpha-2.jar")
 
@@ -112,6 +119,10 @@ def build():
              "--module-source-path", "src",
              "--module", module_name])
         recursive_mkdir_if_necessary(javadoc_dir(module_name))
+
+def target_jar(args):
+    target_build([])
+    for module_name in MODULES:
         run(["javadoc",
              "-html5",
              "--module", module_name,
@@ -125,7 +136,36 @@ def build():
              "-C", "src/%s" % module_name,
              "."])
 
-def clean():
+def target_run(args):
+    """This target is intended to run the program without generating a
+    jar.
+
+    However, I'm currently failing to find how to do that.  What's the
+    correct commandline?  Is it documented somewhere?
+
+    """
+    target_jar([])
+    run(["java",
+         "--module-path", "lib",
+         "--module", "%s/%s" % (MODULES[0], MAIN_CLASS),
+    ] + args)
+
+
+def target_run_without_jar(args):
+    """This target is intended to run the program without generating a
+    jar.
+
+    However, I'm currently failing to find how to do that.  What's the
+    correct commandline?  Is it documented somewhere?
+
+    """
+    target_build([])
+    run(["java",
+         "--module-path", "src:lib",
+         "--module", "%s/%s" % (MODULES[0], MAIN_CLASS),
+    ] + args)
+
+def target_clean(args):
     for module_name in MODULES:
         try:
             os.unlink("lib/%s.jar" % module_name)
@@ -136,7 +176,7 @@ def clean():
                 raise
         if os.path.exists(javadoc_dir(module_name)):
             shutil.rmtree(javadoc_dir(module_name))
-    run("find -name *.class -o -name *.html -delete".split())
+    run("find ( -name *.class -o -name *.html ) -delete".split())
 
 if __name__ == "__main__":
     main()
