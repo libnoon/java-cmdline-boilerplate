@@ -3,7 +3,6 @@ default: build
 CENTRAL = http://central.maven.org/maven2
 JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all
 MODULE = com.example.mainmod
-JAR_NAME = mainmod.jar
 
 lib/jopt-simple-6.0-alpha-2.jar:
 	-mkdir -p lib
@@ -13,10 +12,9 @@ deps: lib/jopt-simple-6.0-alpha-2.jar
 
 build: deps
 	javac $(JAVAC_ARGS) -d src --module-path lib --module-source-path src --module $(MODULE)
-	jar --create --file lib/$(JAR_NAME) --main-class com.example.cli.Main --manifest src/$(MODULE).mf -C src/$(MODULE) .
 
 clean:
-	rm -rf lib/$(JAR_NAME) doc/
+	rm -rf doc/
 	find -name *.class -delete
 
 .PHONY: doc
