@@ -5,7 +5,7 @@ Also see [https://github.com/libnoon/java-cmdline-boilerplate](the Homepage).
 To build:
 
 ``` shell
-$ ./make build
+$ make
 ```
 
 To run:
@@ -17,5 +17,5 @@ $ ./boil --help
 To clean:
 
 ``` shell
-$ ./make clean
+$ make clean
 ```
