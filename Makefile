@@ -11,7 +11,7 @@ lib/jopt-simple-6.0-alpha-2.jar:
 deps: lib/jopt-simple-6.0-alpha-2.jar
 
 build: deps
-	javac $(JAVAC_ARGS) -d src --module-path lib --module-source-path src --module $(MODULE)
+	cd src/$(MODULE) && javac $(JAVAC_ARGS) --class-path ../../lib/\* `find -name \*.java`
 
 clean:
 	rm -rf doc/
