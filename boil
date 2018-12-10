@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-exec java -client --class-path lib/\*:src/com.example.mainmod com.example.cli.Main "$@"
+exec java -client -enableassertions -enablesystemassertions --class-path lib/\*:src/com.example.mainmod com.example.cli.Main "$@"
