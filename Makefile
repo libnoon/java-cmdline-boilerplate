@@ -1,7 +1,7 @@
 default: build
 
 CENTRAL = http://central.maven.org/maven2
-JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all
+JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all -deprecation
 MODULE = com.example.mainmod
 
 lib/jopt-simple-6.0-alpha-2.jar:
