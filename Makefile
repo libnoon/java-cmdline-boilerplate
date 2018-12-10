@@ -1,7 +1,7 @@
 default: build
 
 CENTRAL = http://central.maven.org/maven2
-JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all
+JAVAC_ARGS = -Xlint:all -Xlint:-requires-automatic -Xdoclint:all -deprecation
 MODULE = com.example.mainmod
 JAR_NAME = mainmod.jar
 
