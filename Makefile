@@ -22,4 +22,4 @@ clean:
 .PHONY: doc
 doc:
 	mkdir -p doc
-	javadoc -html5 --module $(MODULE) --module-path lib --module-source-path src -d doc `find src/$(MODULE) -name \*.java`
+	cd src/$(MODULE) && javadoc --class-path ../../lib/\* -html5 -d ../../doc `find -name \*.java`
