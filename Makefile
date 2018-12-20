@@ -23,3 +23,7 @@ clean:
 doc:
 	mkdir -p doc
 	cd src/$(MODULE) && javadoc --class-path ../../lib/\* -html5 -d ../../doc `find -name \*.java`
+
+run: build
+#	./boil /usr/share/doc ..
+	./boil ~/.bashrc
