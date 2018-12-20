@@ -30,8 +30,7 @@ public final class Main {
      */
     private void usage() {
         try {
-            try (InputStream is = getClass().getResourceAsStream("/help.txt")) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/help.txt")))) {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println(line);
