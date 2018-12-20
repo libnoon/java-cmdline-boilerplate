@@ -11,6 +11,7 @@ import java.io.IOException;
 import joptsimple.NonOptionArgumentSpec;
 import java.util.List;
 import java.util.TreeSet;
+import java.io.Console;
 
 /*
  * Cheat sheet for UNIX operations: see the javadoc:
@@ -100,5 +101,10 @@ public final class Main {
                     System.out.println(String.format("%s=%s", key, props.getProperty(key)));
                 });
         }
+
+        Console console = System.console();
+        String username = console.readLine("What is your %s: ", "username");
+        String password = new String(console.readPassword("Enter your %s:", "password"));
+        System.out.println(String.format("username: %s; pass len = %d", username, password.length()));
     }
 }
