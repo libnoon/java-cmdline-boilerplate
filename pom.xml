@@ -1,10 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
 
-  <prerequisites>
-    <maven>3.0</maven>
-  </prerequisites>
-
   <name>boil</name>
   <description>Perform cool things.</description>
   
