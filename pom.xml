@@ -3,7 +3,7 @@
 
   <name>boil</name>
   <description>Perform cool things.</description>
-  
+
   <groupId>fr.fbauzac</groupId>
   <artifactId>boil</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -12,6 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.fork>true</maven.compiler.fork>
   </properties>
 
   <build>
