@@ -63,9 +63,13 @@ public final class Main {
         if (optionSet.has(integer)) {
             System.out.println("The number is " + optionSet.valueOf(integer));
         }
-        
+
         System.out.println("The arguments were: " + String.join(", ", optionSet.valuesOf(nonOptions)));
 
-        System.getProperties().list(System.out);
+        List<String> propertyNames = System.getProperties().stringPropertyNames().stream().sorted().collect(java.util.stream.Collectors.toList());
+        for (var propertyName: propertyNames) {
+            var propertyValue = System.getProperty(propertyName);
+            System.out.println(String.format("%s=%s", propertyName, propertyValue));
+        }
     }
 }
